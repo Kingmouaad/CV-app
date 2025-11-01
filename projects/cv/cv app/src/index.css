@@ -1,0 +1,11 @@
+@import "tailwindcss";
+@layer base {
+  body {
+    @apply bg-[#f6f7f8] w-full h-screen box-border;
+  }
+}
+@layer theme {
+  :root {
+    --best-color: #27d3c8;
+  }
+}
