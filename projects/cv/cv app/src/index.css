@@ -3,9 +3,29 @@
   body {
     @apply bg-[#f6f7f8] w-full h-screen box-border;
   }
+  input {
+    @apply bg-[#e6f9f8] w-[90%] focus:outline-black border-[3px_solid_grey] p-2;
+  }
+  form {
+    @apply p-4 gap-3;
+    div {
+      @apply flex flex-col;
+      input,
+      textarea {
+        @apply focus:[border:2px_solid_black] [border:2px_solid_grey] rounded-lg h-[100%];
+      }
+    }
+  }
 }
 @layer theme {
   :root {
     --best-color: #27d3c8;
+  }
+}
+@layer components {
+  .components {
+    > * {
+      @apply rounded-lg [box-shadow:0_4px_6px_black] [border:4px_solid_black];
+    }
   }
 }
