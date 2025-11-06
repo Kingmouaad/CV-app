@@ -1,8 +1,9 @@
-import { ChevronUp, ChevronDown } from "lucide-react";
+import { ChevronUp, ChevronDown, Trash2 } from "lucide-react";
 import { useState } from "react";
 
 export default function Edu() {
   const [click, setclick] = useState(false);
+  const [tools, settools] = useState([<Tool key={0} />]);
 
   return (
     <div className="bg-[#f9fbfc]">
@@ -20,7 +21,19 @@ export default function Edu() {
           )}
         </button>
       </div>
-      {click && <Tool />}
+      {click && (
+        <div className="">
+          {tools}
+          <button
+            className="w-[96%] [border:2px_dotted_blue] m-2 h-[40px] rounded-[8px] font-bold text-[blue] cursor-pointer"
+            onClick={() => {
+              settools([...tools, <Tool key={tools.length} />]);
+            }}
+          >
+            ADD EDUCATION
+          </button>
+        </div>
+      )}
     </div>
   );
 }
@@ -42,6 +55,12 @@ function Tool() {
       <div>
         <label htmlFor="edate">End Date </label>
         <input id="edate" type="text" placeholder="May 2020 "></input>
+      </div>
+      <div className="col-[1/3] flex justify-center items-center text-[25px] text-red-600">
+        <button className="flex  " onClick={() => {}}>
+          <Trash2 size={30} color="#fb0404" className="relative top-[3px]" />
+          Remove
+        </button>
       </div>
     </form>
   );

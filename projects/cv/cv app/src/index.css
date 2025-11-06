@@ -25,7 +25,7 @@
 @layer components {
   .components {
     > * {
-      @apply rounded-lg [box-shadow:0_4px_6px_black] [border:4px_solid_black];
+      @apply rounded-lg [box-shadow:0_4px_6px_black] [border:2px_solid_black];
     }
   }
 }

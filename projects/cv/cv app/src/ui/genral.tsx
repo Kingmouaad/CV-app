@@ -47,8 +47,9 @@ export default function Genral() {
           <div className="col-[1/3] min-h-18">
             <label htmlFor="pro">Summary fo the background </label>
             <textarea
-              id="a brief sumary of ur profisinal background"
-              className="min-h-[50px] "
+              id="pro"
+              placeholder="a brief sumary of ur profisinal background"
+              className="min-h-[50px] p-2 "
             ></textarea>
           </div>
         </form>
