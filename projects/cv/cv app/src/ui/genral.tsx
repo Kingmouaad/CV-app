@@ -1,18 +1,18 @@
 import { ChevronUp, ChevronDown } from "lucide-react";
 import { useState } from "react";
 
-export default function Genral({ Change }) {
-  const [click, setclick] = useState(false);
+type GenralProps = {
+  onChange: (value: string, field: string) => void;
+};
+
+export default function Genral({ onChange }: GenralProps) {
+  const [click, setClick] = useState(false);
 
   return (
-    <div className="bg-[#f9fbfc] ">
+    <div className="bg-[#f9fbfc]">
       <div className="flex justify-between p-4 [border-bottom:1px_solid_black]">
-        <div>Genral information</div>
-        <button
-          onClick={() => {
-            setclick(!click);
-          }}
-        >
+        <div>General Information</div>
+        <button onClick={() => setClick(!click)}>
           {click ? (
             <ChevronUp size={30} color="#27d3c8" />
           ) : (
@@ -21,15 +21,14 @@ export default function Genral({ Change }) {
         </button>
       </div>
       {click && (
-        <form className="grid grid-cols-[1fr_1fr] auto-rows-[60px]  ">
+        <form className="grid grid-cols-[1fr_1fr] auto-rows-[60px]">
           <div className="col-[1/3]">
             <label htmlFor="fullname">Full name</label>
             <input
               type="text"
               id="fullname"
-              defaultValue={""}
-              placeholder="ilyes"
-              onChange={(e) => Change(e.target.value, "name")}
+              placeholder="Ilyes"
+              onChange={(e) => onChange(e.target.value, "name")}
             />
           </div>
           <div>
@@ -37,9 +36,8 @@ export default function Genral({ Change }) {
             <input
               type="email"
               id="email"
-              defaultValue={""}
               placeholder="ilyes@gmail.com"
-              onChange={(e) => Change(e.target.value, "email")}
+              onChange={(e) => onChange(e.target.value, "email")}
             />
           </div>
           <div>
@@ -47,19 +45,18 @@ export default function Genral({ Change }) {
             <input
               type="tel"
               id="phonenumber"
-              defaultValue={""}
-              placeholder="213 05 49 38 47 38 "
-              onChange={(e) => Change(e.target.value, "phone")}
+              placeholder="+213 05 49 38 47 38"
+              onChange={(e) => onChange(e.target.value, "phone")}
             />
           </div>
           <div className="col-[1/3] min-h-18">
-            <label htmlFor="pro">Summary fo the background </label>
+            <label htmlFor="pro">Summary of the background</label>
             <textarea
               id="pro"
-              placeholder="a brief sumary of ur profisinal background"
-              className="min-h-[50px] p-2 "
-              onChange={(e) => Change(e.target.value, "text")}
-            ></textarea>
+              placeholder="A brief summary of your professional background"
+              className="min-h-[50px] p-2"
+              onChange={(e) => onChange(e.target.value, "text")}
+            />
           </div>
         </form>
       )}

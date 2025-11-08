@@ -1,25 +1,35 @@
 import { ChevronUp, ChevronDown, Trash2 } from "lucide-react";
 import { useState } from "react";
 
-type ToolItem = { id: number };
+type PracticalItem = {
+  id: number;
+  company: string;
+  position: string;
+  responsibilities: string;
+  sdate: string;
+  edate: string;
+};
 
-export default function Practical({ Change }) {
+type PracticalProps = {
+  practical: PracticalItem[];
+  onChange: (id: number, value: string, field: string) => void;
+  onAdd: () => void;
+  onRemove: (id: number) => void;
+};
+
+export default function Practical({
+  practical,
+  onChange,
+  onAdd,
+  onRemove,
+}: PracticalProps) {
   const [click, setClick] = useState(false);
-  const [tools, setTools] = useState<ToolItem[]>([{ id: Date.now() }]);
-
-  const addTool = () => setTools((prev) => [...prev, { id: Date.now() }]);
-  const removeTool = (id: number) =>
-    setTools((prev) => prev.filter((e) => e.id !== id));
 
   return (
     <div className="bg-[#f9fbfc]">
       <div className="flex justify-between p-4 [border-bottom:1px_solid_black]">
         <div>Practical Experience</div>
-        <button
-          onClick={() => {
-            setClick(!click);
-          }}
-        >
+        <button onClick={() => setClick(!click)}>
           {click ? (
             <ChevronUp size={30} color="#27d3c8" />
           ) : (
@@ -29,17 +39,22 @@ export default function Practical({ Change }) {
       </div>
       {click && (
         <div>
-          {tools.map((t) => (
-            <Tool key={t.id} id={t.id} onRemove={() => removeTool(t.id)} />
+          {practical.map((prac) => (
+            <Tool
+              key={prac.id}
+              item={prac}
+              onChange={onChange}
+              onRemove={() => onRemove(prac.id)}
+            />
           ))}
           <button
             className="w-[96%] [border:2px_dotted_blue] m-2 h-10 rounded-lg font-bold text-[blue] cursor-pointer"
             onClick={(e) => {
               e.preventDefault();
-              addTool();
+              onAdd();
             }}
           >
-            ADD EDUCATION
+            ADD EXPERIENCE
           </button>
         </div>
       )}
@@ -47,32 +62,65 @@ export default function Practical({ Change }) {
   );
 }
 
-function Tool({ id, onRemove }: { id: number; onRemove: () => void }) {
+type ToolProps = {
+  item: PracticalItem;
+  onChange: (id: number, value: string, field: string) => void;
+  onRemove: () => void;
+};
+
+function Tool({ item, onChange, onRemove }: ToolProps) {
   return (
     <form className="grid grid-cols-[1fr_1fr] auto-rows-[60px] bg-[#dbeafe] m-2 rounded-2xl [box-shadow:0_0_6px_black]">
       <div className="col-[1/3]">
-        <label htmlFor={`uni-${id}`}>Company</label>
-        <input type="text" id={`uni-${id}`} placeholder="Company of example" />
+        <label htmlFor={`company-${item.id}`}>Company</label>
+        <input
+          type="text"
+          id={`company-${item.id}`}
+          value={item.company}
+          placeholder="Company of example"
+          onChange={(e) => onChange(item.id, e.target.value, "company")}
+        />
       </div>
       <div className="col-[1/3]">
-        <label htmlFor={`role-${id}`}>Role</label>
-        <input type="text" id={`role-${id}`} placeholder="Software Enginner" />
+        <label htmlFor={`role-${item.id}`}>Role</label>
+        <input
+          type="text"
+          id={`role-${item.id}`}
+          value={item.position}
+          placeholder="Software Engineer"
+          onChange={(e) => onChange(item.id, e.target.value, "position")}
+        />
       </div>
-      <div className="col-[1/3] ">
-        <label htmlFor={`area-${id}`}>Responsibilities</label>
+      <div className="col-[1/3]">
+        <label htmlFor={`area-${item.id}`}>Responsibilities</label>
         <textarea
-          id={`area-${id}`}
-          placeholder="a brief summary of the work u did "
-          className=""
+          id={`area-${item.id}`}
+          value={item.responsibilities}
+          placeholder="A brief summary of the work you did"
+          onChange={(e) =>
+            onChange(item.id, e.target.value, "responsibilities")
+          }
         />
       </div>
       <div>
-        <label htmlFor={`sdate-${id}`}>Start Date</label>
-        <input type="text" id={`sdate-${id}`} placeholder="April 2017" />
+        <label htmlFor={`sdate-${item.id}`}>Start Date</label>
+        <input
+          type="text"
+          id={`sdate-${item.id}`}
+          value={item.sdate}
+          placeholder="April 2017"
+          onChange={(e) => onChange(item.id, e.target.value, "sdate")}
+        />
       </div>
       <div>
-        <label htmlFor={`edate-${id}`}>End Date</label>
-        <input id={`edate-${id}`} type="text" placeholder="May 2020" />
+        <label htmlFor={`edate-${item.id}`}>End Date</label>
+        <input
+          id={`edate-${item.id}`}
+          type="text"
+          value={item.edate}
+          placeholder="May 2020"
+          onChange={(e) => onChange(item.id, e.target.value, "edate")}
+        />
       </div>
       <div className="col-[1/3] flex justify-center items-center text-[25px] text-red-600">
         <button
