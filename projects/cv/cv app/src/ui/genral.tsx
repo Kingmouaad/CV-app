@@ -1,7 +1,7 @@
 import { ChevronUp, ChevronDown } from "lucide-react";
 import { useState } from "react";
 
-export default function Genral() {
+export default function Genral({ Change }) {
   const [click, setclick] = useState(false);
 
   return (
@@ -24,15 +24,22 @@ export default function Genral() {
         <form className="grid grid-cols-[1fr_1fr] auto-rows-[60px]  ">
           <div className="col-[1/3]">
             <label htmlFor="fullname">Full name</label>
-            <input type="text" id="fullname" value={0} placeholder="ilyes" />
+            <input
+              type="text"
+              id="fullname"
+              defaultValue={""}
+              placeholder="ilyes"
+              onChange={(e) => Change(e.target.value, "name")}
+            />
           </div>
           <div>
             <label htmlFor="email">Email</label>
             <input
               type="email"
               id="email"
-              value={0}
+              defaultValue={""}
               placeholder="ilyes@gmail.com"
+              onChange={(e) => Change(e.target.value, "email")}
             />
           </div>
           <div>
@@ -40,8 +47,9 @@ export default function Genral() {
             <input
               type="tel"
               id="phonenumber"
-              value={0}
+              defaultValue={""}
               placeholder="213 05 49 38 47 38 "
+              onChange={(e) => Change(e.target.value, "phone")}
             />
           </div>
           <div className="col-[1/3] min-h-18">
@@ -50,6 +58,7 @@ export default function Genral() {
               id="pro"
               placeholder="a brief sumary of ur profisinal background"
               className="min-h-[50px] p-2 "
+              onChange={(e) => Change(e.target.value, "text")}
             ></textarea>
           </div>
         </form>

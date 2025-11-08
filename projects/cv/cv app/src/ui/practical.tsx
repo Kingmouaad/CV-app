@@ -1,8 +1,15 @@
-import { ChevronUp, ChevronDown } from "lucide-react";
+import { ChevronUp, ChevronDown, Trash2 } from "lucide-react";
 import { useState } from "react";
 
-export default function Practical() {
-  const [click, setclick] = useState(false);
+type ToolItem = { id: number };
+
+export default function Practical({ Change }) {
+  const [click, setClick] = useState(false);
+  const [tools, setTools] = useState<ToolItem[]>([{ id: Date.now() }]);
+
+  const addTool = () => setTools((prev) => [...prev, { id: Date.now() }]);
+  const removeTool = (id: number) =>
+    setTools((prev) => prev.filter((e) => e.id !== id));
 
   return (
     <div className="bg-[#f9fbfc]">
@@ -10,7 +17,7 @@ export default function Practical() {
         <div>Practical Experience</div>
         <button
           onClick={() => {
-            setclick(!click);
+            setClick(!click);
           }}
         >
           {click ? (
@@ -20,41 +27,64 @@ export default function Practical() {
           )}
         </button>
       </div>
-      {click && <Tool />}
+      {click && (
+        <div>
+          {tools.map((t) => (
+            <Tool key={t.id} id={t.id} onRemove={() => removeTool(t.id)} />
+          ))}
+          <button
+            className="w-[96%] [border:2px_dotted_blue] m-2 h-10 rounded-lg font-bold text-[blue] cursor-pointer"
+            onClick={(e) => {
+              e.preventDefault();
+              addTool();
+            }}
+          >
+            ADD EDUCATION
+          </button>
+        </div>
+      )}
     </div>
   );
 }
-function Tool() {
+
+function Tool({ id, onRemove }: { id: number; onRemove: () => void }) {
   return (
-    <form className="grid grid-cols-[1fr_1fr] auto-rows-[60px] m-2 bg-[#dbeafe] rounded-2xl [box-shadow:0_0_6px_black]">
+    <form className="grid grid-cols-[1fr_1fr] auto-rows-[60px] bg-[#dbeafe] m-2 rounded-2xl [box-shadow:0_0_6px_black]">
       <div className="col-[1/3]">
-        <label htmlFor="fullname">Full name</label>
-        <input type="text" id="fullname" value={0} placeholder="ilyes" />
+        <label htmlFor={`uni-${id}`}>Company</label>
+        <input type="text" id={`uni-${id}`} placeholder="Company of example" />
       </div>
-      <div>
-        <label htmlFor="email">Email</label>
-        <input
-          type="email"
-          id="email"
-          value={0}
-          placeholder="ilyes@gmail.com"
-        />
+      <div className="col-[1/3]">
+        <label htmlFor={`role-${id}`}>Role</label>
+        <input type="text" id={`role-${id}`} placeholder="Software Enginner" />
       </div>
-      <div>
-        <label htmlFor="phonenumber">Number</label>
-        <input
-          type="tel"
-          id="phonenumber"
-          value={0}
-          placeholder="213 05 49 38 47 38 "
-        />
-      </div>
-      <div className="col-[1/3] min-h-15">
-        <label htmlFor="pro">Summary fo the background </label>
+      <div className="col-[1/3] ">
+        <label htmlFor={`area-${id}`}>Responsibilities</label>
         <textarea
-          id="a brief sumary of ur profisinal background"
-          className="min-h-[50px] "
-        ></textarea>
+          id={`area-${id}`}
+          placeholder="a brief summary of the work u did "
+          className=""
+        />
+      </div>
+      <div>
+        <label htmlFor={`sdate-${id}`}>Start Date</label>
+        <input type="text" id={`sdate-${id}`} placeholder="April 2017" />
+      </div>
+      <div>
+        <label htmlFor={`edate-${id}`}>End Date</label>
+        <input id={`edate-${id}`} type="text" placeholder="May 2020" />
+      </div>
+      <div className="col-[1/3] flex justify-center items-center text-[25px] text-red-600">
+        <button
+          className="flex cursor-pointer"
+          onClick={(e) => {
+            e.preventDefault();
+            onRemove();
+          }}
+        >
+          <Trash2 size={30} color="#fb0404" className="relative top-[3px]" />
+          Remove
+        </button>
       </div>
     </form>
   );
